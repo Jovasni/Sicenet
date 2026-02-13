@@ -14,7 +14,6 @@ class LoginViewModel : ViewModel() {
     var matricula by mutableStateOf("")
     var contrasenia by mutableStateOf("")
 
-    // Estados para el control de la UI
     var isLoading by mutableStateOf(false)
     var loginResult by mutableStateOf("")
     var isSuccess by mutableStateOf(false)
