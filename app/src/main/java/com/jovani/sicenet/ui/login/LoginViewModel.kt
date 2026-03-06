@@ -1,11 +1,17 @@
 package com.jovani.sicenet.ui.login
 
+import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.jovani.sicenet.data.repository.SicenetRepository
+import com.jovani.sicenet.data.workers.FetchDataWorker
+import com.jovani.sicenet.data.workers.SaveDataWorker
 import kotlinx.coroutines.launch
 
 class LoginViewModel : ViewModel() {
@@ -36,5 +42,22 @@ class LoginViewModel : ViewModel() {
             }
             isLoading = false
         }
+    }
+
+    fun iniciarSincronizacion(context: Context) {
+        val workManager = WorkManager.getInstance(context)
+
+        val requestFetch = OneTimeWorkRequestBuilder<FetchDataWorker>()
+            .build()
+
+        val requestSave = OneTimeWorkRequestBuilder<SaveDataWorker>()
+            .build()
+
+        workManager.beginUniqueWork(
+            "sincronizacion_inicial",
+            ExistingWorkPolicy.REPLACE,
+            requestFetch
+        ).then(requestSave)
+            .enqueue()
     }
 }
