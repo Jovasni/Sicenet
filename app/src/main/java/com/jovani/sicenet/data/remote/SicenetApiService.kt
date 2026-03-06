@@ -7,7 +7,6 @@ import retrofit2.http.POST
 
 interface SicenetApiService {
 
-    // Autenticación
     @Headers(
         "Content-Type: text/xml; charset=utf-8",
         "SOAPAction: http://tempuri.org/accesoLogin"
@@ -15,11 +14,18 @@ interface SicenetApiService {
     @POST("ws/wsalumnos.asmx")
     suspend fun login(@Body xmlLogin: String): Response<String>
 
-    // usa la cookie guardada en el cliente
     @Headers(
         "Content-Type: text/xml; charset=utf-8",
         "SOAPAction: http://tempuri.org/getAlumnoAcademicoWithLineamiento"
     )
     @POST("ws/wsalumnos.asmx")
     suspend fun getPerfil(@Body xmlPerfil: String): Response<String>
+
+    @Headers("Content-Type: text/xml; charset=utf-8", "SOAPAction: http://tempuri.org/getCargaAcademicaByAlumno")
+    @POST("ws/wsalumnos.asmx")
+    suspend fun getCargaAcademica(@Body xml: String): Response<String>
+
+    @Headers("Content-Type: text/xml; charset=utf-8", "SOAPAction: http://tempuri.org/getAllKardexConPromedioByAlumno")
+    @POST("ws/wsalumnos.asmx")
+    suspend fun getKardex(@Body xml: String): Response<String>
 }

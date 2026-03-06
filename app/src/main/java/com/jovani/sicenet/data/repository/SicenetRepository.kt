@@ -5,7 +5,6 @@ import com.jovani.sicenet.data.remote.RetrofitClient
 class SicenetRepository {
     private val api = RetrofitClient.apiService
 
-    // Función para Autenticación
     suspend fun login(matricula: String, contrasenia: String): String? {
         val xmlBody = """
             <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
@@ -23,7 +22,6 @@ class SicenetRepository {
         return if (response.isSuccessful) response.body() else null
     }
 
-    // Función para Consultar Perfil con la Cookie ya guardada
     suspend fun getPerfil(): String? {
         val xmlBody = """
             <?xml version="1.0" encoding="utf-8"?>

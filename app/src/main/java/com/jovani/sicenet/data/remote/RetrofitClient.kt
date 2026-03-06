@@ -10,12 +10,10 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
 
-    // Configuración del gestor de cookies para que guarde la sesión de SICENET
     private val cookieManager = CookieManager().apply {
         setCookiePolicy(CookiePolicy.ACCEPT_ALL)
     }
 
-    // Creamos el cliente HTTP que usará las cookies
     private val okHttpClient = OkHttpClient.Builder()
         .cookieJar(JavaNetCookieJar(cookieManager))
         .connectTimeout(30, TimeUnit.SECONDS)
@@ -26,7 +24,7 @@ object RetrofitClient {
         Retrofit.Builder()
             .baseUrl("https://sicenet.surguanajuato.tecnm.mx/")
             .client(okHttpClient)
-            .addConverterFactory(ScalarsConverterFactory.create()) // Para leer XML como String
+            .addConverterFactory(ScalarsConverterFactory.create())
             .build()
             .create(SicenetApiService::class.java)
     }

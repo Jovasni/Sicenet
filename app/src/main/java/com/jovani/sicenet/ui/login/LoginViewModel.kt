@@ -29,7 +29,7 @@ class LoginViewModel : ViewModel() {
             val result = repository.login(matricula, contrasenia)
 
             if (result != null && result.contains("accesoLoginResult")) {
-                loginResult = "¡Éxito! Cargando perfil..."
+                loginResult = "Cargando perfil..<."
                 isSuccess = true
             } else {
                 loginResult = "Error: Usuario o contraseña incorrectos"
